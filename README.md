@@ -8,9 +8,13 @@ More about NMDC: https://microbiomedata.org/
 1) git clone git@github.com:microbiomedata/pynmdc.gitc.git
 2) Go to the pynmdc package root dir
 3) Run this command:
+   ```
    pip install -e .
+   ```
 4) Run test code:
+   ```
    python src/nmdc/tests/test_testadata.py
+   ```
 
 Example output from the test code
 
