@@ -1,20 +1,14 @@
-* About pynmdc
+# About pynmdc
 
 PyNMDC is a Python package to work with NMDC data.
 
 More about NMDC: https://microbiomedata.org/
 
-** Install (for developers only):
-1) git clone git@github.com:microbiomedata/pynmdc.gitc.git
-2) Go to the pynmdc package root dir
-3) Run this command:
-   ```
-   pip install -e .
-   ```
-4) Run test code:
-   ```
-   python src/nmdc/tests/test_testadata.py
-   ```
+## Install (for developers only):
+1 git clone git@github.com:microbiomedata/pynmdc.gitc.git
+2 Go to the pynmdc package root dir
+3 Run this command: `pip install -e .`
+4 Run test code: `python src/nmdc/tests/test_testadata.py`
 
 Example output from the test code
 
