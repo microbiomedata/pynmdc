@@ -29,7 +29,7 @@ class testMetadata(unittest.TestCase):
             for rec in GFF.parse(fh):
                 for feature in rec.features:
                     feature_id = feature.id
-                    feature_type = '**' + feature.type  # FIXME
+                    feature_type = feature.type  # FIXME
                     if feature_type in sddict.keys():
                         feature_type_so = sddict[feature_type]
                     else:
