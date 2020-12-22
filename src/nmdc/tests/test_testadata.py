@@ -51,7 +51,7 @@ class testMetadata(unittest.TestCase):
                         start=feature_start,
                         end=feature_end,
                         strand=feature_strand,
-                        type={'term': feature_type_so},
+                        type=feature_type_so,
                         encodes=f'NMDC:{feature_id}'  # feature id # FIXME
                     )
                     self.assertEqual(nmdc_gf.seqid,
@@ -59,9 +59,7 @@ class testMetadata(unittest.TestCase):
                     self.assertEqual(nmdc_gf.start, 48-1)
                     self.assertEqual(nmdc_gf.end, 1037)
                     self.assertEqual(nmdc_gf.strand, '+')
-                    # self.assertEqual(nmdc_gf.type, 'SO:0000316')
-                    # self.assertEqual(nmdc_gf.encodes,
-                    #                  'NMDC:Ga0185794_41_48_1037')
+                    self.assertEqual(nmdc_gf.type, 'SO:0000316')
                     print('\nFrom NMDC GenomeFeature\n')
                     print(f'\t{nmdc_gf}')
 
