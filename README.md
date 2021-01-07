@@ -5,7 +5,7 @@ PyNMDC is a Python package to work with NMDC data.
 More about NMDC: https://microbiomedata.org/
 
 ## Install (for developers only):
-1 git clone git@github.com:microbiomedata/pynmdc.gitc.git
+1 `git clone git@github.com:microbiomedata/pynmdc.gitc.git`
 
 2 Go to the pynmdc package root dir
 
@@ -33,7 +33,7 @@ $nmdc gff2json test_data/metaT/metaT.gff
 
 Output:
 
-'''json
+'''javascript
 {
   "seqid": "NMDC:1781_100346_scf_10000_c1",
   "start": 1,
