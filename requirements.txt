@@ -1,4 +1,5 @@
 bcbio-gff==0.6.6
+click
 
 # Requirements below comes from the https://github.com/microbiomedata/nmdc-metadata/requirements.txt
 
@@ -15,7 +16,6 @@ bcbio-gff==0.6.6
 ################################################################################
 
 biolinkml >= 1.6.0
-click
 pipenv-to-requirements
 pyyaml
 requests

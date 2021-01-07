@@ -60,5 +60,8 @@ setup(
     cmdclass={
         'develop': PostDevelopCommand,
         'install': PostInstallCommand
+        },
+    entry_points={
+        'console_scripts': ['nmdc = nmdc.scripts.__main__:nmdccli']
         }
 )
