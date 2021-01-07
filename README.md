@@ -33,7 +33,7 @@ $nmdc gff2json test_data/metaT/metaT.gff
 
 Output:
 
-'''javascript
+```javascript
 {
   "seqid": "NMDC:1781_100346_scf_10000_c1",
   "start": 1,
@@ -6090,4 +6090,4 @@ Output:
   "type": "SO:0000252",
   "encodes": "NMDC:1781_100346_scf_9996_c1_1_454"
 }
-'''
+```
