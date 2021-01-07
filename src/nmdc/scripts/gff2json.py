@@ -36,43 +36,57 @@ class NMDCGenomeFeature(schema.GenomeFeature):
         return js
 
 
-def parse_gff(gfffh):
+class NMDCGFFLoader:
     """
-    Load a NMDC GFF3 file and convert it to JSON.
-
-    gfffh: GFF file handler ready to read.
+    Load a GFF a file and map its contents to NMDC GenomeFeature
     """
-    SOOBO = os.path.join(os.path.dirname(schema.__file__),
-                         'so-simple.obo')
-    sograph = obonet.read_obo(SOOBO)
-    sddict = {data.get('name'): id_
-              for id_, data in sograph.nodes(data=True)}
+    def __init__(self, gfffh):
+        """
+        Load a NMDC GFF3 file and convert it to JSON.
 
-    for rec in GFF.parse(gfffh):
-        for feature in rec.features:
-            feature_id = feature.id
-            feature_type = feature.type
-            if feature_type in sddict.keys():
-                feature_type_so = sddict[feature_type]
-            else:
-                feature_type_so = None
-            feature_start = int(feature.location.start)
-            feature_end = int(feature.location.end)
-            feature_strand = feature.location.strand
-            if feature_strand == 1:  # FIXME
-                feature_strand = '+'
-            elif feature_strand == 0:
-                feature_strand = '-'
-            else:
-                feature_strand = ''
-            seqid = f'NMDC:{rec.id}'
-            nmdc_gf = NMDCGenomeFeature(
-                seqid=seqid,
-                start=feature_start,
-                end=feature_end,
-                strand=feature_strand,
-                type=feature_type_so,
-                encodes=f'NMDC:{feature_id}'  # feature id # FIXME
-            )
-            print(nmdc_gf.get_json())
+        gfffh: GFF file handler ready to read.
+        """
+        SOOBO = os.path.join(os.path.dirname(schema.__file__),
+                             'so-simple.obo')
+        sograph = obonet.read_obo(SOOBO)
+        sddict = {data.get('name'): id_
+                  for id_, data in sograph.nodes(data=True)}
 
+        jd = {}
+
+        for rec in GFF.parse(gfffh):
+            rd = {}
+            for feature in rec.features:
+                feature_id = feature.id
+                feature_type = feature.type
+                if feature_type in sddict.keys():
+                    feature_type_so = sddict[feature_type]
+                else:
+                    feature_type_so = None
+                feature_start = int(feature.location.start)
+                feature_end = int(feature.location.end)
+                feature_strand = feature.location.strand
+                if feature_strand == 1:  # FIXME
+                    feature_strand = '+'
+                elif feature_strand == 0:
+                    feature_strand = '-'
+                else:
+                    feature_strand = ''
+                seqid = f'NMDC:{rec.id}'
+                nmdc_gf = NMDCGenomeFeature(
+                    seqid=seqid,
+                    start=feature_start,
+                    end=feature_end,
+                    strand=feature_strand,
+                    type=feature_type_so,
+                    encodes=f'NMDC:{feature_id}'  # feature id # FIXME
+                )
+                rd.update({feature_id: nmdc_gf.__dict__()})
+            jd.update({rec.id: rd})
+        self.data = jd
+
+    def get_json(self, indent=2):
+        """
+        Return data as JSON dump
+        """
+        return json.dumps(self.data, indent=indent)

@@ -3,7 +3,8 @@ CLI tools for NMDC
 """
 import click
 from nmdc import __version__
-from nmdc.scripts.gff2json import parse_gff
+from nmdc.scripts.gff2json import NMDCGFFLoader
+
 
 @click.group(help=f"""NMDC Tools v{__version__}.""")
 def nmdccli():
@@ -19,7 +20,8 @@ def gff2json(gff):
     """
     Convert GFF3 to NMDC JSON format.
     """
-    parse_gff(gff)
+    converter = NMDCGFFLoader(gff)
+    print(converter.get_json())
 
 
 if __name__ == '__main__':
