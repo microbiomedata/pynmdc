@@ -66,11 +66,11 @@ class NMDCGFFLoader:
                 feature_start = int(feature.location.start)
                 feature_end = int(feature.location.end)
                 feature_strand = feature.location.strand
-                if feature_strand == 1:  # FIXME
+                if feature_strand == 1:  # 1 for '+' strand
                     feature_strand = '+'
-                elif feature_strand == 0:
+                elif feature_strand == -1:  # -1 for '-' strand
                     feature_strand = '-'
-                else:
+                elif feature_strand is None:  # None for '' strand
                     feature_strand = ''
                 seqid = f'NMDC:{rec.id}'
                 nmdc_gf = NMDCGenomeFeature(
@@ -79,7 +79,7 @@ class NMDCGFFLoader:
                     end=feature_end,
                     strand=feature_strand,
                     type=feature_type_so,
-                    encodes=f'NMDC:{feature_id}'  # feature id # FIXME
+                    encodes=f'NMDC:{feature_id}'
                 )
                 rd.update({feature_id: nmdc_gf.__dict__()})
             jd.update({rec.id: rd})
@@ -89,4 +89,4 @@ class NMDCGFFLoader:
         """
         Return data as JSON dump
         """
-        return json.dumps(self.data, indent=indent)
+        return json.dumps(self.model, indent=indent)
