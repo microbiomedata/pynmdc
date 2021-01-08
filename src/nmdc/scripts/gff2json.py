@@ -83,7 +83,7 @@ class NMDCGFFLoader:
                 )
                 rd.update({feature_id: nmdc_gf.__dict__()})
             jd.update({rec.id: rd})
-        self.data = jd
+        self.model = jd
 
     def get_json(self, indent=2):
         """
