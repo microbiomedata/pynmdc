@@ -33,12 +33,14 @@ Commands:
    This will test the parsing of GenomeFeature in annotation to JSON.
 
    The input gff is:
-   `Ga0185794_41	GeneMark.hmm-2 v1.05	CDS	48	1037	56.13	+	0	ID=Ga0185794_41_48_1037;translation_table=11;start_type=ATG;product=5-methylthioadenosine/S-adenosylhomocysteine deaminase;product_source=KO:K12960;cath_funfam=3.20.20.140;cog=COG0402;ko=KO:K12960;ec_number=EC:3.5.4.28,EC:3.5.4.31;pfam=PF01979;superfamily=51338,51556`
+   
+```Ga0185794_41	GeneMark.hmm-2 v1.05	CDS	48	1037	56.13	+	0	ID=Ga0185794_41_48_1037;translation_table=11;start_type=ATG;product=5-methylthioadenosine/S-adenosylhomocysteine deaminase;product_source=KO:K12960;cath_funfam=3.20.20.140;cog=COG0402;ko=KO:K12960;ec_number=EC:3.5.4.28,EC:3.5.4.31;pfam=PF01979;superfamily=51338,51556```
 
-   Output in JSON is 
-   ```javascript
-{
-  "Ga0185794_41": {
+   Output in JSON is
+   
+```javascript
+   {
+     "Ga0185794_41": {
     "Ga0185794_41_48_1037": {
       "seqid": "NMDC:Ga0185794_41",
       "start": 47,
@@ -80,7 +82,8 @@ Commands:
     }
   }
 }
-   ```
+
+```
 
 
 6 Run gff2json using the MetaG annotation example gff file in test_data :
