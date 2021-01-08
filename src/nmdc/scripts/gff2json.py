@@ -21,6 +21,18 @@ class NMDCGenomeFeature(schema.GenomeFeature):
         for k in kargs:
             self.properties.update({k: kargs[k]})
 
+        self.ACCEPTABLE_KEYS = ['id',
+                                'cog',
+                                'product',
+                                'cath_funfam',
+                                'ko',
+                                'ec_number',
+                                'pfam',
+                                'superfamily',
+                                'source'
+                                'score',
+                                'phase']
+
     def __repr__(self):
         repr = f'NMDCGenomeFeature seqid: {self.seqid}.'
         return repr
@@ -32,8 +44,39 @@ class NMDCGenomeFeature(schema.GenomeFeature):
         """
         Get JSON dump.
         """
-        js = json.dumps(self.__dict__(), indent=indent)
+        js = json.dump(self.__dict__(), indent=indent)
         return js
+
+    # def add_product(self, prod):
+    #     """
+    #     Add annotation type "product"
+    #     """
+    #     anno_prod = {'product':
+    #                  {'subject': 
+    #     self.properties['annotations']
+        
+
+    def add_annotation(self, adict):
+        """
+        Add annotation dictionary to GenomeFeature
+        """
+        if 'annotations' in self.properties.keys():
+            old = self.properties['annotations']
+            for (k, v) in adict.items():
+                if k.lower() in self.ACCEPTABLE_KEYS:
+                    if k not in old.keys():
+                        old.update({k.lower(): v})
+                    else:
+                        pass
+            self.properties.update({'annotations': old})
+        else:
+            annotations = {}
+            for (k, v) in adict.items():
+                if k.lower() in self.ACCEPTABLE_KEYS:
+                    annotations.update({k.lower(): v})
+                else:
+                    pass
+            self.properties.update({'annotations': annotations})
 
 
 class NMDCGFFLoader:
@@ -81,6 +124,8 @@ class NMDCGFFLoader:
                     type=feature_type_so,
                     encodes=f'NMDC:{feature_id}'
                 )
+                for (k, v) in feature.qualifiers.items():
+                    nmdc_gf.add_annotation({k: v})
                 rd.update({feature_id: nmdc_gf.__dict__()})
             jd.update({rec.id: rd})
         self.model = jd
