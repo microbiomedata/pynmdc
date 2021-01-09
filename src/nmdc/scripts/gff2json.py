@@ -20,10 +20,9 @@ class NMDCGenomeFeature(schema.GenomeFeature):
                            'end': end}
         for k in kargs:
             self.properties.update({k: kargs[k]})
-
-        self.ACCEPTABLE_KEYS = ['id',
-                                'cog',
+        self.ACCEPTABLE_KEYS = ['cog',
                                 'product',
+                                'smart',
                                 'cath_funfam',
                                 'ko',
                                 'ec_number',
@@ -47,36 +46,67 @@ class NMDCGenomeFeature(schema.GenomeFeature):
         js = json.dump(self.__dict__(), indent=indent)
         return js
 
-    # def add_product(self, prod):
-    #     """
-    #     Add annotation type "product"
-    #     """
-    #     anno_prod = {'product':
-    #                  {'subject': 
-    #     self.properties['annotations']
-        
+    @staticmethod
+    def prepare_curie(k: str, term: str) -> str:
+        """
+        From https://github.com/microbiomedata/nmdc-metadata scripts/gff3_converter.py
+    ￼    Given a key and a term, prepare a CURIE for the term.
+    ￼
+    ￼    Parameters
+    ￼    ----------
+    ￼    k: str
+    ￼        The key
+    ￼    term: str
+    ￼        A database entity
+    ￼
+    ￼    Returns
+    ￼    -------
+    ￼    str
+    ￼        A CURIE representation of the given term
+    ￼
+    ￼    """
+        if k.lower() == 'ko':
+            curie = f"KEGG.ORTHOLOGY:{term}"
+        elif k.lower() == 'pfam':
+            curie = f"PFAM:{term}"
+        elif k.lower() == 'smart':
+            curie = f"SMART:{term}"
+        elif k.lower() == 'cog':
+            curie = f"EGGNOG:{term}"
+        elif k.lower() == 'cath_funfam':
+            curie = f"CATH:{term}"
+        elif k.lower() == 'superfamily':
+            curie = f"SUPFAM:{term}"
+        else:
+            curie = f":{term}"
+        return curie
 
-    def add_annotation(self, adict):
+    def add_annotation(self, adict, feature_id):
         """
         Add annotation dictionary to GenomeFeature
         """
-        if 'annotations' in self.properties.keys():
-            old = self.properties['annotations']
-            for (k, v) in adict.items():
-                if k.lower() in self.ACCEPTABLE_KEYS:
-                    if k not in old.keys():
-                        old.update({k.lower(): v})
+        for (k, v) in adict.items():
+            k = k.lower()
+            if k in self.ACCEPTABLE_KEYS:
+                assert(isinstance(v, list))
+                for t in v:
+                    term_curie = NMDCGenomeFeature.prepare_curie(k, v)
+                    functional_annotation = {
+                        'subject': f"NMDC:{feature_id}",
+                        'has_function': term_curie,
+                        'was_generated_by': 'N/A',
+                        'type': "NMDC:FunctionalAnnotation"}
+                    if 'annotations' in self.properties.keys():
+                        old = self.properties['annotations']
+                        if k not in old.keys():
+                            old.update({k: functional_annotation})
+                        else:
+                            pass
+                        self.properties.update({'annotations': old})
                     else:
-                        pass
-            self.properties.update({'annotations': old})
-        else:
-            annotations = {}
-            for (k, v) in adict.items():
-                if k.lower() in self.ACCEPTABLE_KEYS:
-                    annotations.update({k.lower(): v})
-                else:
-                    pass
-            self.properties.update({'annotations': annotations})
+                        annotations = {}
+                        annotations.update({k: functional_annotation})
+                        self.properties.update({'annotations': annotations})
 
 
 class NMDCGFFLoader:
@@ -124,8 +154,7 @@ class NMDCGFFLoader:
                     type=feature_type_so,
                     encodes=f'NMDC:{feature_id}'
                 )
-                for (k, v) in feature.qualifiers.items():
-                    nmdc_gf.add_annotation({k: v})
+                nmdc_gf.add_annotation(feature.qualifiers, feature_id)
                 rd.update({feature_id: nmdc_gf.__dict__()})
             jd.update({rec.id: rd})
         self.model = jd

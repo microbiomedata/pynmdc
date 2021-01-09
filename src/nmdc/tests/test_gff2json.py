@@ -25,8 +25,10 @@ class testGFF2JSON(unittest.TestCase):
             self.assertEqual(tmp['end'], 1037)
             self.assertEqual(tmp['strand'], '+')
             self.assertEqual(tmp['type'], 'SO:0000316')
-            self.assertEqual(tmp['annotations']['cog'], ['COG0402'])
-            self.assertEqual(tmp['annotations']['ko'], ['KO:K12960'])
+            self.assertEqual(tmp['annotations']['cog']['has_function'],
+                             "EGGNOG:['COG0402']")
+            self.assertEqual(tmp['annotations']['ko']['has_function'],
+                             "KEGG.ORTHOLOGY:['KO:K12960']")
 
 
 if __name__ == '__main__':
