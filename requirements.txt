@@ -19,6 +19,9 @@ biolinkml >= 1.6.0
 pipenv-to-requirements
 pyyaml
 requests
-obonet
 bcbio-gff
-
+# from schema.py
+obonet
+biolinkml
+rdflib
+dataclasses
