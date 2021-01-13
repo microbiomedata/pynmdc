@@ -18,7 +18,7 @@ More about NMDC: https://microbiomedata.org/
 pynmdc$ nmdc --help
 Usage: nmdc [OPTIONS] COMMAND [ARGS]...
 
-  NMDC Tools v0.1.
+  NMDC Tools v0.2.
 
 Options:
   --help  Show this message and exit.

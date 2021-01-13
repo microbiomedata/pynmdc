@@ -32,7 +32,6 @@ def gff2json(gff, of, oa):
     INDENT = 2
     converter = NMDCGFFLoader(gff)
     jobj = json.loads(converter.get_json())
-    
     for record in jobj.keys():
         for feature in jobj[record].keys():
             entry = jobj[record][feature]
