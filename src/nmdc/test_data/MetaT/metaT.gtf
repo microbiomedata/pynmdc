@@ -1,0 +1,14 @@
+# stringtie -o out.gtf -p 1 -A gene_abundan.gtf /cromwell-executions/metat_omics/0a3553b8-a685-48f3-b46b-3619d2cc3b66/call-run_stringtie/inputs/73396751/mapped_sorted.bam
+# StringTie version 2.1.4
+k123_13	StringTie	transcript	1	728	1000	.	.	gene_id "STRG.1"; transcript_id "STRG.1.1"; cov "7.123626"; FPKM "92084.101562"; TPM "175429.359375";
+k123_13	StringTie	exon	1	728	1000	.	.	gene_id "STRG.1"; transcript_id "STRG.1.1"; exon_number "1"; cov "7.123626";
+k123_15	StringTie	transcript	1	491	1000	.	.	gene_id "STRG.2"; transcript_id "STRG.2.1"; cov "5.928717"; FPKM "76638.023438"; TPM "146003.046875";
+k123_15	StringTie	exon	1	491	1000	.	.	gene_id "STRG.2"; transcript_id "STRG.2.1"; exon_number "1"; cov "5.928717";
+k123_20	StringTie	transcript	38	731	1000	.	.	gene_id "STRG.3"; transcript_id "STRG.3.1"; cov "6.840058"; FPKM "88418.531250"; TPM "168446.109375";
+k123_20	StringTie	exon	38	731	1000	.	.	gene_id "STRG.3"; transcript_id "STRG.3.1"; exon_number "1"; cov "6.840058";
+k123_35	StringTie	transcript	1	698	1000	.	.	gene_id "STRG.4"; transcript_id "STRG.4.1"; cov "5.842407"; FPKM "75522.328125"; TPM "143877.531250";
+k123_35	StringTie	exon	1	698	1000	.	.	gene_id "STRG.4"; transcript_id "STRG.4.1"; exon_number "1"; cov "5.842407";
+k123_38	StringTie	transcript	1	845	1000	.	.	gene_id "STRG.5"; transcript_id "STRG.5.1"; cov "8.491124"; FPKM "109761.171875"; TPM "209105.937500";
+k123_38	StringTie	exon	1	845	1000	.	.	gene_id "STRG.5"; transcript_id "STRG.5.1"; exon_number "1"; cov "8.491124";
+k123_41	StringTie	transcript	1	596	1000	.	.	gene_id "STRG.6"; transcript_id "STRG.6.1"; cov "6.380872"; FPKM "82482.828125"; TPM "157138.000000";
+k123_41	StringTie	exon	1	596	1000	.	.	gene_id "STRG.6"; transcript_id "STRG.6.1"; exon_number "1"; cov "6.380872";
