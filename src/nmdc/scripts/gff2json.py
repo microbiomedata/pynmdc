@@ -15,22 +15,25 @@ class NMDCGenomeFeature(schema.GenomeFeature):
     def __init__(self, seqid, start, end, **kargs):
         super().__init__(seqid, start, end, **kargs)
         assert(isinstance(kargs, dict))
-        self.properties = {'seqid': seqid,
-                           'start': start,
-                           'end': end}
+        
+        genome_feature = {'seqid': seqid,
+                          'start': start,
+                          'end': end}
         for k in kargs:
-            self.properties.update({k: kargs[k]})
-        self.ACCEPTABLE_KEYS = ['cog',
-                                'product',
-                                'smart',
-                                'cath_funfam',
-                                'ko',
-                                'ec_number',
-                                'pfam',
-                                'superfamily',
-                                'source'
-                                'score',
-                                'phase']
+            genome_feature.update({k: kargs[k]})
+        self.properties = {'genome_feature': genome_feature,
+                           'functional_annotation': {}}
+        self._ACCEPTABLE_KEYS = ['cog',
+                                 'product',
+                                 'smart',
+                                 'cath_funfam',
+                                 'ko',
+                                 'ec_number',
+                                 'pfam',
+                                 'superfamily',
+                                 'source'
+                                 'score',
+                                 'phase']
 
     def __repr__(self):
         repr = f'NMDCGenomeFeature seqid: {self.seqid}.'
@@ -46,10 +49,12 @@ class NMDCGenomeFeature(schema.GenomeFeature):
         js = json.dump(self.__dict__(), indent=indent)
         return js
 
+# From nmdc-metadata scripts/gff3_converter.py
+# Removed 'was_generated_by' as requested.
     @staticmethod
     def prepare_curie(k: str, term: str) -> str:
         """
-        From https://github.com/microbiomedata/nmdc-metadata scripts/gff3_converter.py
+
     ￼    Given a key and a term, prepare a CURIE for the term.
     ￼
     ￼    Parameters
@@ -87,32 +92,37 @@ class NMDCGenomeFeature(schema.GenomeFeature):
         """
         for (k, v) in adict.items():
             k = k.lower()
-            if k in self.ACCEPTABLE_KEYS:
+            if k in self._ACCEPTABLE_KEYS:
                 assert(isinstance(v, list))
                 for t in v:
                     term_curie = NMDCGenomeFeature.prepare_curie(k, v)
                     functional_annotation = {
                         'subject': f"NMDC:{feature_id}",
                         'has_function': term_curie,
-                        'was_generated_by': 'N/A',
                         'type': "NMDC:FunctionalAnnotation"}
-                    if 'annotations' in self.properties.keys():
-                        old = self.properties['annotations']
-                        if k not in old.keys():
-                            old.update({k: functional_annotation})
-                        else:
-                            pass
-                        self.properties.update({'annotations': old})
+                    if k not in self.properties['functional_annotation'].keys():
+                        self.properties['functional_annotation'].update(
+                            {k: functional_annotation})
                     else:
-                        annotations = {}
-                        annotations.update({k: functional_annotation})
-                        self.properties.update({'annotations': annotations})
+                        pass
+                    # if 'annotations' in self.properties.keys():
+                    #     old = self.properties['annotations']
+                    #     if k not in old.keys():
+                    #         old.update({k: functional_annotation})
+                    #     else:
+                    #         pass
+                    #     self.properties.update({'annotations': old})
+                    # else:
+                    #     annotations = {}
+                    #     annotations.update({k: functional_annotation})
+                    #     self.properties.update({'annotations': annotations})
 
 
 class NMDCGFFLoader:
     """
     Load a GFF a file and map its contents to NMDC GenomeFeature
     """
+    # TODO: Better use a generator to generate json per line of gff
     def __init__(self, gfffh):
         """
         Load a NMDC GFF3 file and convert it to JSON.

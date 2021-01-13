@@ -20,14 +20,15 @@ class testGFF2JSON(unittest.TestCase):
             print(jst)
             tmp = json.loads(jst)
             tmp = tmp['Ga0185794_41']['Ga0185794_41_48_1037']
-            self.assertEqual(tmp['seqid'], 'NMDC:Ga0185794_41')
-            self.assertEqual(tmp['start'], 48-1)
-            self.assertEqual(tmp['end'], 1037)
-            self.assertEqual(tmp['strand'], '+')
-            self.assertEqual(tmp['type'], 'SO:0000316')
-            self.assertEqual(tmp['annotations']['cog']['has_function'],
-                             "EGGNOG:['COG0402']")
-            self.assertEqual(tmp['annotations']['ko']['has_function'],
+            gf = tmp['genome_feature']
+            af = tmp['functional_annotation']
+            self.assertEqual(gf['seqid'], 'NMDC:Ga0185794_41')
+            self.assertEqual(gf['start'], 48-1)
+            self.assertEqual(gf['end'], 1037)
+            self.assertEqual(gf['strand'], '+')
+            self.assertEqual(gf['type'], 'SO:0000316')
+            self.assertEqual(af['cog']['has_function'], "EGGNOG:['COG0402']")
+            self.assertEqual(af['ko']['has_function'],
                              "KEGG.ORTHOLOGY:['KO:K12960']")
 
 
