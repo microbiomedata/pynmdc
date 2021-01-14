@@ -77,44 +77,37 @@ Ga0185794_41	GeneMark.hmm-2 v1.05	CDS	48	1037	56.13	+	0	ID=Ga0185794_41_48_1037;
     {
       "subject": "NMDC:Ga0185794_41_48_1037",
       "has_function": "5-methylthioadenosine/S-adenosylhomocysteine deaminase",
-      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5",
-      "type": "NMDC:FunctionalAnnotation"
+      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5"
     },
     {
       "subject": "NMDC:Ga0185794_41_48_1037",
       "has_function": "CATH:3.20.20.140",
-      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5",
-      "type": "NMDC:FunctionalAnnotation"
+      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5"
     },
     {
       "subject": "NMDC:Ga0185794_41_48_1037",
       "has_function": "EGGNOG:COG0402",
-      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5",
-      "type": "NMDC:FunctionalAnnotation"
+      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5"
     },
     {
       "subject": "NMDC:Ga0185794_41_48_1037",
       "has_function": "KEGG.ORTHOLOGY:K12960",
-      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5",
-      "type": "NMDC:FunctionalAnnotation"
+      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5"
     },
     {
       "subject": "NMDC:Ga0185794_41_48_1037",
       "has_function": "EC:3.5.4.28",
-      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5",
-      "type": "NMDC:FunctionalAnnotation"
+      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5"
     },
     {
       "subject": "NMDC:Ga0185794_41_48_1037",
       "has_function": "PFAM:PF01979",
-      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5",
-      "type": "NMDC:FunctionalAnnotation"
+      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5"
     },
     {
       "subject": "NMDC:Ga0185794_41_48_1037",
       "has_function": "SUPFAM:51338",
-      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5",
-      "type": "NMDC:FunctionalAnnotation"
+      "was_generated_by": "nmdc:4ce9a799923b238585fc952135e5a0f5"
     }
   ]
 }
