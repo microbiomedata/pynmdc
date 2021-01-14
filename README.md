@@ -90,7 +90,7 @@ Ga0185794_41	GeneMark.hmm-2 v1.05	CDS	48	1037	56.13	+	0	ID=Ga0185794_41_48_1037;
     },
     {
       "subject": "NMDC:Ga0185794_41_48_1037",
-      "has_function": "KO:K12960",
+      "has_function": "KEGG.ORTHOLOGY:K12960",
       "type": "NMDC:FunctionalAnnotation"
     },
     {

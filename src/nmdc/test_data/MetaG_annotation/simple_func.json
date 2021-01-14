@@ -17,7 +17,7 @@
     },
     {
       "subject": "NMDC:Ga0185794_41_48_1037",
-      "has_function": "KO:K12960",
+      "has_function": "KEGG.ORTHOLOGY:K12960",
       "type": "NMDC:FunctionalAnnotation"
     },
     {

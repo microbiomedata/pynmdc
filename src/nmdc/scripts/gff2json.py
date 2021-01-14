@@ -74,7 +74,11 @@ class NMDCGenomeFeature(schema.GenomeFeature):
     ￼
     ￼    """
         if re.match(r"^[^ <()>:]*:[^/ :]+$", term):
-            curie = term
+            prefix, reference = term.split(':', 1)
+            if prefix == 'KO':
+                curie = f"KEGG.ORTHOLOGY:{reference}"
+            else:
+                curie = term
         else:
             if k.lower() == 'ko':
                 curie = f"KEGG.ORTHOLOGY:{term}"
