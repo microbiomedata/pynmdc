@@ -31,27 +31,30 @@ def gff2json(gff, of, oa):
     """
     INDENT = 2
     converter = NMDCGFFLoader(gff)
-    jobj = json.loads(converter.get_json())
+    jobj = converter.model
+    features = []
+    annotations = []
     for record in jobj.keys():
         for feature in jobj[record].keys():
             entry = jobj[record][feature]
-            gf = entry['feature_set']
-            fa = entry['functional_annotation_set']
-            of.write(json.dumps(gf, indent=INDENT))
-            num_annotations = len(fa)
-            oa.write('[\n')
-            for i, annotation in enumerate(fa.keys(), start=1):
-                oa.write(json.dumps(fa[annotation], indent=INDENT))
-                if i < num_annotations:
-                    oa.write(',')
-            oa.write(']\n')
+            features.append(entry['feature_set'])
+            annotations.extend(list(entry['functional_annotation_set'].values()))
+            #of.write(json.dumps(gf, indent=INDENT))
+            # num_annotations = len(fa)
+            # oa.write('[\n')
+            # for i, annotation in enumerate(fa.keys(), start=1):
+            #     oa.write(json.dumps(fa[annotation], indent=INDENT))
+            #     if i < num_annotations:
+            #         oa.write(',')
+            # oa.write(']\n')
         # for feature in jobj[record].keys():
             # entry = jobj[record][feature]
             # gf = entry['genome_feature']
             # fa = entry['functional_annotation']
             # of.write(json.dumps(gf, indent=INDENT))
             # oa.write(json.dumps(fa,  indent=INDENT))
-
+    of.write(json.dumps({'feature_set': features}, indent=INDENT))
+    oa.write(json.dumps({'functional_annotation_set': annotations}, indent=INDENT))
 
 
 if __name__ == '__main__':

@@ -3,6 +3,8 @@ Methods to convert NMDC GFF3 to JSON
 """
 import os
 import json
+import re
+
 import obonet
 from BCBio import GFF
 from nmdc.metadata import schema
@@ -31,9 +33,10 @@ class NMDCGenomeFeature(schema.GenomeFeature):
                                  'ec_number',
                                  'pfam',
                                  'superfamily',
-                                 'source'
-                                 'score',
-                                 'phase']
+                                 # 'source'
+                                 # 'score',
+                                 # 'phase'
+                                 ]
 
     def __repr__(self):
         repr = f'NMDCGenomeFeature seqid: {self.seqid}.'
@@ -70,20 +73,25 @@ class NMDCGenomeFeature(schema.GenomeFeature):
     ￼        A CURIE representation of the given term
     ￼
     ￼    """
-        if k.lower() == 'ko':
-            curie = f"KEGG.ORTHOLOGY:{term}"
-        elif k.lower() == 'pfam':
-            curie = f"PFAM:{term}"
-        elif k.lower() == 'smart':
-            curie = f"SMART:{term}"
-        elif k.lower() == 'cog':
-            curie = f"EGGNOG:{term}"
-        elif k.lower() == 'cath_funfam':
-            curie = f"CATH:{term}"
-        elif k.lower() == 'superfamily':
-            curie = f"SUPFAM:{term}"
+        if re.match(r"^[^ <()>:]*:[^/ :]+$", term):
+            curie = term
         else:
-            curie = f":{term}"
+            if k.lower() == 'ko':
+                curie = f"KEGG.ORTHOLOGY:{term}"
+            elif k.lower() == 'pfam':
+                curie = f"PFAM:{term}"
+            elif k.lower() == 'smart':
+                curie = f"SMART:{term}"
+            elif k.lower() == 'cog':
+                curie = f"EGGNOG:{term}"
+            elif k.lower() == 'cath_funfam':
+                curie = f"CATH:{term}"
+            elif k.lower() == 'superfamily':
+                curie = f"SUPFAM:{term}"
+            elif k.lower() == 'product':
+                curie = term
+            else:
+                curie = f":{term}"
         return curie
 
     def add_annotation(self, adict, feature_id):
@@ -95,7 +103,7 @@ class NMDCGenomeFeature(schema.GenomeFeature):
             if k in self._ACCEPTABLE_KEYS:
                 assert(isinstance(v, list))
                 for t in v:
-                    term_curie = NMDCGenomeFeature.prepare_curie(k, v)
+                    term_curie = NMDCGenomeFeature.prepare_curie(k, t)
                     functional_annotation = {
                         'subject': f"NMDC:{feature_id}",
                         'has_function': term_curie,
