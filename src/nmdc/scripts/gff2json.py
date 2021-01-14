@@ -21,8 +21,8 @@ class NMDCGenomeFeature(schema.GenomeFeature):
                           'end': end}
         for k in kargs:
             genome_feature.update({k: kargs[k]})
-        self.properties = {'genome_feature': genome_feature,
-                           'functional_annotation': {}}
+        self.properties = {'feature_set': genome_feature,
+                           'functional_annotation_set': {}}
         self._ACCEPTABLE_KEYS = ['cog',
                                  'product',
                                  'smart',
@@ -100,8 +100,8 @@ class NMDCGenomeFeature(schema.GenomeFeature):
                         'subject': f"NMDC:{feature_id}",
                         'has_function': term_curie,
                         'type': "NMDC:FunctionalAnnotation"}
-                    if k not in self.properties['functional_annotation'].keys():
-                        self.properties['functional_annotation'].update(
+                    if k not in self.properties['functional_annotation_set'].keys():
+                        self.properties['functional_annotation_set'].update(
                             {k: functional_annotation})
                     else:
                         pass
