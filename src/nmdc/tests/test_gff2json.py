@@ -27,9 +27,9 @@ class testGFF2JSON(unittest.TestCase):
             self.assertEqual(gf['end'], 1037)
             self.assertEqual(gf['strand'], '+')
             self.assertEqual(gf['type'], 'SO:0000316')
-            self.assertEqual(af['cog']['has_function'], "EGGNOG:['COG0402']")
+            self.assertEqual(af['cog']['has_function'], "EGGNOG:COG0402")
             self.assertEqual(af['ko']['has_function'],
-                             "KEGG.ORTHOLOGY:['KO:K12960']")
+                             "KO:K12960")
 
 
 if __name__ == '__main__':
