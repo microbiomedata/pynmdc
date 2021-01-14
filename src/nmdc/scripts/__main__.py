@@ -35,10 +35,23 @@ def gff2json(gff, of, oa):
     for record in jobj.keys():
         for feature in jobj[record].keys():
             entry = jobj[record][feature]
-            gf = entry['genome_feature']
-            fa = entry['functional_annotation']
+            gf = entry['feature_set']
+            fa = entry['functional_annotation_set']
             of.write(json.dumps(gf, indent=INDENT))
-            oa.write(json.dumps(fa,  indent=INDENT))
+            num_annotations = len(fa)
+            oa.write('[\n')
+            for i, annotation in enumerate(fa.keys(), start=1):
+                oa.write(json.dumps(fa[annotation], indent=INDENT))
+                if i < num_annotations:
+                    oa.write(',')
+            oa.write(']\n')
+        # for feature in jobj[record].keys():
+            # entry = jobj[record][feature]
+            # gf = entry['genome_feature']
+            # fa = entry['functional_annotation']
+            # of.write(json.dumps(gf, indent=INDENT))
+            # oa.write(json.dumps(fa,  indent=INDENT))
+
 
 
 if __name__ == '__main__':
