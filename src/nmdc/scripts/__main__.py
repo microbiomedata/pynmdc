@@ -25,12 +25,16 @@ def nmdccli():
               help='output file name for functioanl annotation json',
               required=True,
               type=click.File(mode='w'))
-def gff2json(gff, of, oa):
+@click.option('-ai',
+              help='Activity index',
+              required=True,
+              type=str)
+def gff2json(gff, of, oa, ai):
     """
     Convert GFF3 to NMDC JSON format.
     """
     INDENT = 2
-    converter = NMDCGFFLoader(gff)
+    converter = NMDCGFFLoader(gff, ai)
     jobj = converter.model
     features = []
     annotations = []
@@ -39,20 +43,6 @@ def gff2json(gff, of, oa):
             entry = jobj[record][feature]
             features.append(entry['feature_set'])
             annotations.extend(list(entry['functional_annotation_set'].values()))
-            #of.write(json.dumps(gf, indent=INDENT))
-            # num_annotations = len(fa)
-            # oa.write('[\n')
-            # for i, annotation in enumerate(fa.keys(), start=1):
-            #     oa.write(json.dumps(fa[annotation], indent=INDENT))
-            #     if i < num_annotations:
-            #         oa.write(',')
-            # oa.write(']\n')
-        # for feature in jobj[record].keys():
-            # entry = jobj[record][feature]
-            # gf = entry['genome_feature']
-            # fa = entry['functional_annotation']
-            # of.write(json.dumps(gf, indent=INDENT))
-            # oa.write(json.dumps(fa,  indent=INDENT))
     of.write(json.dumps({'feature_set': features}, indent=INDENT))
     oa.write(json.dumps({'functional_annotation_set': annotations}, indent=INDENT))
 

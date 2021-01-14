@@ -14,10 +14,9 @@ class NMDCGenomeFeature(schema.GenomeFeature):
     """
     NMDC GenomeFeature with JSON export functionality
     """
-    def __init__(self, seqid, start, end, **kargs):
+    def __init__(self, ai, seqid, start, end, **kargs):
         super().__init__(seqid, start, end, **kargs)
         assert(isinstance(kargs, dict))
-        
         genome_feature = {'seqid': seqid,
                           'start': start,
                           'end': end}
@@ -32,11 +31,9 @@ class NMDCGenomeFeature(schema.GenomeFeature):
                                  'ko',
                                  'ec_number',
                                  'pfam',
-                                 'superfamily',
-                                 # 'source'
-                                 # 'score',
-                                 # 'phase'
+                                 'superfamily'
                                  ]
+        self.ai = ai            # activity index
 
     def __repr__(self):
         repr = f'NMDCGenomeFeature seqid: {self.seqid}.'
@@ -53,7 +50,6 @@ class NMDCGenomeFeature(schema.GenomeFeature):
         return js
 
 # From nmdc-metadata scripts/gff3_converter.py
-# Removed 'was_generated_by' as requested.
     @staticmethod
     def prepare_curie(k: str, term: str) -> str:
         """
@@ -111,23 +107,13 @@ class NMDCGenomeFeature(schema.GenomeFeature):
                     functional_annotation = {
                         'subject': f"NMDC:{feature_id}",
                         'has_function': term_curie,
+                        'was_generated_by': self.ai,
                         'type': "NMDC:FunctionalAnnotation"}
                     if k not in self.properties['functional_annotation_set'].keys():
                         self.properties['functional_annotation_set'].update(
                             {k: functional_annotation})
                     else:
                         pass
-                    # if 'annotations' in self.properties.keys():
-                    #     old = self.properties['annotations']
-                    #     if k not in old.keys():
-                    #         old.update({k: functional_annotation})
-                    #     else:
-                    #         pass
-                    #     self.properties.update({'annotations': old})
-                    # else:
-                    #     annotations = {}
-                    #     annotations.update({k: functional_annotation})
-                    #     self.properties.update({'annotations': annotations})
 
 
 class NMDCGFFLoader:
@@ -135,11 +121,12 @@ class NMDCGFFLoader:
     Load a GFF a file and map its contents to NMDC GenomeFeature
     """
     # TODO: Better use a generator to generate json per line of gff
-    def __init__(self, gfffh):
+    def __init__(self, gfffh, ai):
         """
         Load a NMDC GFF3 file and convert it to JSON.
 
         gfffh: GFF file handler ready to read.
+        ai: activity index string
         """
         SOOBO = os.path.join(os.path.dirname(schema.__file__),
                              'so-simple.obo')
@@ -169,6 +156,7 @@ class NMDCGFFLoader:
                     feature_strand = ''
                 seqid = f'NMDC:{rec.id}'
                 nmdc_gf = NMDCGenomeFeature(
+                    ai=ai,
                     seqid=seqid,
                     start=feature_start,
                     end=feature_end,
