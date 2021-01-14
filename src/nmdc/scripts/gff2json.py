@@ -108,7 +108,8 @@ class NMDCGenomeFeature(schema.GenomeFeature):
                         'subject': f"NMDC:{feature_id}",
                         'has_function': term_curie,
                         'was_generated_by': self.ai,
-                        'type': "NMDC:FunctionalAnnotation"}
+                        #'type': "NMDC:FunctionalAnnotation"
+                    }
                     if k not in self.properties['functional_annotation_set'].keys():
                         self.properties['functional_annotation_set'].update(
                             {k: functional_annotation})

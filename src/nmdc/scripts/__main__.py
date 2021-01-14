@@ -3,6 +3,10 @@ CLI tools for NMDC
 """
 import click
 import json
+
+import jsonschema
+from jsonschema import validate
+
 from nmdc import __version__
 from nmdc.scripts.gff2json import NMDCGFFLoader
 
@@ -45,6 +49,21 @@ def gff2json(gff, of, oa, ai):
             annotations.extend(list(entry['functional_annotation_set'].values()))
     of.write(json.dumps({'feature_set': features}, indent=INDENT))
     oa.write(json.dumps({'functional_annotation_set': annotations}, indent=INDENT))
+
+
+@nmdccli.command('validate')
+@click.option('--schema', help='The NMDC metadata JSON Schema', required=True, type=click.Path())
+@click.option('--file', help='The file with JSON data to validate', required=True, type=click.Path())
+def validate_json(schema, file):
+    """
+    Validate JSON as per NMDC Metadata schema.
+    """
+    try:
+        validate(instance=json.load(open(file)), schema=json.load(open(schema)))
+        print("Given JSON data is valid")
+    except jsonschema.exceptions.ValidationError as err:
+        print(err)
+        print("Given JSON data is not valid")
 
 
 if __name__ == '__main__':
