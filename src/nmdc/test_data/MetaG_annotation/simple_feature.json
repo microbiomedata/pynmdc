@@ -2,7 +2,7 @@
   "feature_set": [
     {
       "seqid": "NMDC:Ga0185794_41",
-      "start": 47,
+      "start": 48,
       "end": 1037,
       "strand": "+",
       "type": "SO:0000316",

@@ -59,7 +59,7 @@ Ga0185794_41	GeneMark.hmm-2 v1.05	CDS	48	1037	56.13	+	0	ID=Ga0185794_41_48_1037;
   "feature_set": [
     {
       "seqid": "NMDC:Ga0185794_41",
-      "start": 47,
+      "start": 48,
       "end": 1037,
       "strand": "+",
       "type": "SO:0000316",

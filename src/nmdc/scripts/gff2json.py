@@ -159,7 +159,7 @@ class NMDCGFFLoader:
                 nmdc_gf = NMDCGenomeFeature(
                     ai=ai,
                     seqid=seqid,
-                    start=feature_start,
+                    start=feature_start + 1,  # switch to 1-based counting
                     end=feature_end,
                     strand=feature_strand,
                     type=feature_type_so,

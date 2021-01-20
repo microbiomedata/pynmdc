@@ -25,7 +25,7 @@ class testGFF2JSON(unittest.TestCase):
             gf = tmp['feature_set']
             af = tmp['functional_annotation_set']
             self.assertEqual(gf['seqid'], 'NMDC:Ga0185794_41')
-            self.assertEqual(gf['start'], 48-1)
+            self.assertEqual(gf['start'], 48)
             self.assertEqual(gf['end'], 1037)
             self.assertEqual(gf['strand'], '+')
             self.assertEqual(gf['type'], 'SO:0000316')
