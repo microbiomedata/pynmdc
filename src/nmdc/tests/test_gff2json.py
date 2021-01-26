@@ -22,7 +22,7 @@ class testGFF2JSON(unittest.TestCase):
             print(jst)
             tmp = json.loads(jst)
             tmp = tmp['Ga0185794_41']['Ga0185794_41_48_1037']
-            gf = tmp['feature_set']
+            gf = tmp['genome_feature_set']
             af = tmp['functional_annotation_set']
             self.assertEqual(gf['seqid'], 'nmdc:Ga0185794_41')
             self.assertEqual(gf['start'], 48)

@@ -56,7 +56,7 @@ Ga0185794_41	GeneMark.hmm-2 v1.05	CDS	48	1037	56.13	+	0	ID=Ga0185794_41_48_1037;
 
 ```json
 {
-  "feature_set": [
+  "genome_feature_set": [
     {
       "seqid": "nmdc:Ga0185794_41",
       "start": 48,

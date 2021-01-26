@@ -22,7 +22,7 @@ class NMDCGenomeFeature(schema.GenomeFeature):
                           'end': end}
         for k in kargs:
             genome_feature.update({k: kargs[k]})
-        self.properties = {'feature_set': genome_feature,
+        self.properties = {'genome_feature_set': genome_feature,
                            'functional_annotation_set': {}}
         self._ACCEPTABLE_KEYS = ['cog',
                                  'product',
