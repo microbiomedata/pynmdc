@@ -45,9 +45,9 @@ def gff2json(gff, of, oa, ai):
     for record in jobj.keys():
         for feature in jobj[record].keys():
             entry = jobj[record][feature]
-            features.append(entry['feature_set'])
+            features.append(entry['genome_feature_set'])
             annotations.extend(list(entry['functional_annotation_set'].values()))
-    of.write(json.dumps({'feature_set': features}, indent=INDENT))
+    of.write(json.dumps({'genome_feature_set': features}, indent=INDENT))
     oa.write(json.dumps({'functional_annotation_set': annotations}, indent=INDENT))
 
 

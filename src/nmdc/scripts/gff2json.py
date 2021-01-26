@@ -156,15 +156,25 @@ class NMDCGFFLoader:
                 elif feature_strand is None:  # None for '' strand
                     feature_strand = ''
                 seqid = f'nmdc:{rec.id}'
-                nmdc_gf = NMDCGenomeFeature(
-                    ai=ai,
-                    seqid=seqid,
-                    start=feature_start + 1,  # switch to 1-based counting
-                    end=feature_end,
-                    strand=feature_strand,
-                    type=feature_type_so,
-                    encodes=f'nmdc:{feature_id}'
-                )
+                if feature_type_so is None:  # avoid "null" type info.
+                    nmdc_gf = NMDCGenomeFeature(
+                        ai=ai,
+                        seqid=seqid,
+                        start=feature_start + 1,  # switch to 1-based counting
+                        end=feature_end,
+                        strand=feature_strand,
+                        encodes=f'nmdc:{feature_id}'
+                    )
+                else:
+                    nmdc_gf = NMDCGenomeFeature(
+                        ai=ai,
+                        seqid=seqid,
+                        start=feature_start + 1,  # switch to 1-based counting
+                        end=feature_end,
+                        strand=feature_strand,
+                        type=feature_type_so,
+                        encodes=f'nmdc:{feature_id}'
+                    )
                 nmdc_gf.add_annotation(feature.qualifiers, feature_id)
                 rd.update({feature_id: nmdc_gf.__dict__()})
             jd.update({rec.id: rd})
