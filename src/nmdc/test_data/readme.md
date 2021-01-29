@@ -1,4 +1,7 @@
 # Test data sources:
+These files provide example files (GFF, JSONs) used in NMDC workflows.
+
+## Binning
 
 ## MetaG_annotation:
     * 1781_100325_functional_annotation_1000.gff
@@ -10,4 +13,6 @@
      
    * metaT.json
      Example JSON output from metaT. It contains RPKM information that is not part of the metaT.gff file
+
+
        

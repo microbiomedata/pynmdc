@@ -31,7 +31,7 @@ class PostInstallCommand(install):
 setup(
     name='nmdc',
     version=VERSION,
-    description="Study-level NGS bioinformatics toolbox",
+    description="Command line toolbox of NMDC (https://microbiomedata.org/)",
     long_description=README,
     long_description_content_type="text/markdown",
     classifiers=[

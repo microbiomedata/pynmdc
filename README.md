@@ -12,6 +12,12 @@ More about NMDC: https://microbiomedata.org/
 
 ### Setup
 
+Package intall using pypi
+```sh
+pynmdc$ pip install nmdc
+```
+
+
 Go to the pynmdc package root dir and run the following command
 to install the package in developer mode,
 
