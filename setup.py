@@ -29,10 +29,11 @@ class PostInstallCommand(install):
 
 
 setup(
-    name='pynmdc',
+    name='nmdc',
     version=VERSION,
     description="Study-level NGS bioinformatics toolbox",
     long_description=README,
+    long_description_content_type="text/markdown",
     classifiers=[
         # http://pypi.python.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 2 - Pre-Alpha',
