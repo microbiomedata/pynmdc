@@ -3,6 +3,8 @@ CLI tools for NMDC
 """
 import click
 import json
+import subprocess
+import os
 
 import jsonschema
 from jsonschema import validate
@@ -10,6 +12,7 @@ from jsonschema import validate
 from nmdc import __version__
 from nmdc.scripts.gff2json import NMDCGFFLoader
 
+main_path=os.path.dirname(os.path.realpath(__file__))
 
 @click.group(help=f"""NMDC Tools v{__version__}.""")
 def nmdccli():
@@ -50,6 +53,14 @@ def gff2json(gff, of, oa, ai):
     of.write(json.dumps({'genome_feature_set': features}, indent=INDENT))
     oa.write(json.dumps({'functional_annotation_set': annotations}, indent=INDENT))
 
+@nmdccli.command('gffstats')
+@click.option('--contig', help='contig fasta file', required=True, type=click.Path())
+@click.option('--gff', help='gff file', required=True, type=click.Path())
+def gffstats(contig,gff):
+    """
+    Generate gff summary stats in text and json fomrat
+    """
+    subprocess.run([main_path+'/gff_and_final_fasta_stats.py',contig,gff])
 
 @nmdccli.command('validate')
 @click.option('--schema', help='The NMDC metadata JSON Schema', required=True, type=click.Path())
