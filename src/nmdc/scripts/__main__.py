@@ -65,6 +65,15 @@ def validate_json(schema, file):
         print(err)
         print("Given JSON data is not valid")
 
+@nmdccli.command('compare')
+@click.option('--ref', help='reference json file', required=True, type=click.Path())
+@click.option('--compare', help='user json file', required=True, type=click.Path())
+def compare_json(ref,compare):
+    """
+    Compare json files to validate test output
+    """
+    subprocess.run([main_path+'/compare_json.py',ref,compare])
+
 
 if __name__ == '__main__':
     nmdccli()
