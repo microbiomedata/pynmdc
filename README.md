@@ -38,6 +38,7 @@ Options:
 
 Commands:
   gff2json  Convert GFF3 to NMDC JSON format.
+  comparejson Compares output stats form json files to validate user run test data
 ```
 
 ### Test the package
