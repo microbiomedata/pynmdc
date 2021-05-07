@@ -30,6 +30,12 @@ with open(compare_stat, "r") as c:
     compare = json.load(c)
 c.close()
 
+if "filename" in ref:
+    ref.pop("filename", None)
+
+if "filename" in compare:
+    compare.pop("filename", None)
+
 #threshold for acceptable values 
 threshold = 0.001
 
@@ -49,6 +55,3 @@ elif DeepDiff(ref,compare) != {}:
     #if not met, test failed
     else:
         print("Test Failed")
-
-
-
