@@ -76,19 +76,20 @@ class NMDCGenomeFeature(schema.GenomeFeature):
             else:
                 curie = term
         else:
-            if k.lower() == 'ko':
+            k = k.lower()
+            if k == 'ko':
                 curie = f"KEGG.ORTHOLOGY:{term}"
-            elif k.lower() == 'pfam':
+            elif k == 'pfam':
                 curie = f"PFAM:{term}"
-            elif k.lower() == 'smart':
+            elif k == 'smart':
                 curie = f"SMART:{term}"
-            elif k.lower() == 'cog':
+            elif k == 'cog':
                 curie = f"EGGNOG:{term}"
-            elif k.lower() == 'cath_funfam':
+            elif k == 'cath_funfam':
                 curie = f"CATH:{term}"
-            elif k.lower() == 'superfamily':
+            elif k == 'superfamily':
                 curie = f"SUPFAM:{term}"
-            elif k.lower() == 'product':
+            elif k == 'product':
                 curie = term
             else:
                 curie = f":{term}"
