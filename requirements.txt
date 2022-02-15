@@ -5,3 +5,4 @@ obonet
 biopython
 bcbio-gff>=0.6.6
 click
+pandas
