@@ -1,4 +1,4 @@
-biolinkml >= 1.6.0
+linkml
 pyyaml
 requests
 obonet
