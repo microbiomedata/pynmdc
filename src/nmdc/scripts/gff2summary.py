@@ -58,7 +58,7 @@ def prepare_curie(k: str, term: str) -> str:
     return curie
 
 
-if __name__=='__main__':
+def generate_counts(gff3file, md5_sum, informed_by):
 
     '''
     Given gff, md5 of gff, and activity id
@@ -78,18 +78,11 @@ if __name__=='__main__':
          Contains fields: metagenome_annotation_id | gene_function_id | count
     '''
 
-    parser=argparse.ArgumentParser(description = "Parses GFF and returns ")
-    parser.add_argument('-gff','--gff3', help='GFF3 file', required = True, type = str)
-    parser.add_argument('-md5', '--md5_sum' ,help='Take in functional annotation md5sum', required=True,type=str)
-    parser.add_argument('-ib', '--informed_by', help='Informed by nmdc activity id', required=True, type=str)
-    #set args
-    args = parser.parse_args()
-
     #list of acceptable keys to extract curie term    
     acceptable_terms = ['cog','product', 'smart','cath_funfam','ko','ec_number','pfam','superfamily']
 
 
-    gff3 = open(args.gff3, 'r')
+    gff3 = open(gff3file, 'r')
     count_terms = {}
     for rec in GFF.parse(gff3):
         for feature in rec.features:
@@ -103,7 +96,7 @@ if __name__=='__main__':
                         count_terms[curie_term] += 1
     gff3.close()
 
-    with open(args.md5_sum, 'r') as file:
+    with open(md5_sum, 'r') as file:
         annotation_md5 = file.read().rstrip()
     
 
@@ -112,4 +105,17 @@ if __name__=='__main__':
     first_column = df.pop('metagenome_annotation_id')
     df.insert(0, 'metagenome_annotation_id', first_column)
 
-    df.to_json(f'{args.informed_by}_functional_summary.json', orient='records' ,indent=2)
+    df.to_json(f'{informed_by}_functional_summary.json', orient='records' ,indent=2)
+
+if __name__=="__main__":
+
+    parser=argparse.ArgumentParser(description = "Parses GFF and returns ")
+    parser.add_argument('-gff','--gff3', help='GFF3 file', required = True, type = str)
+    parser.add_argument('-md5', '--md5_sum' ,help='Take in functional annotation md5sum', required=True,type=str)
+    parser.add_argument('-ib', '--informed_by', help='Informed by nmdc activity id', required=True, type=str)
+    #set args
+    args = parser.parse_args()
+
+    generate_counts(args.gff3, args.md5_sum, args.informed_by)
+
+
