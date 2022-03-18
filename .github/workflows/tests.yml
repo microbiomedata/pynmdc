@@ -1,0 +1,29 @@
+name: PyNMDC Tests
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.py'
+      - 'requirements.txt'
+  pull_request:
+    paths:
+      - '**.py'
+      - 'requirements.txt'
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Test
+      run: |
+        pip install -e .
+        python src/nmdc/tests/test_gff2json.py
