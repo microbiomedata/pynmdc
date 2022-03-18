@@ -6,10 +6,12 @@ on:
     paths:
       - '**.py'
       - 'requirements.txt'
+      - '.github/workflows/tests.yml'
   pull_request:
     paths:
       - '**.py'
       - 'requirements.txt'
+      - '.github/workflows/tests.yml'
 
 
 jobs:
@@ -26,4 +28,5 @@ jobs:
     - name: Test
       run: |
         pip install -e .
-        python src/nmdc/tests/test_gff2json.py
+        pip install pytest
+        pytest
