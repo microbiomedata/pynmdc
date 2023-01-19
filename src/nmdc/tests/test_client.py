@@ -8,7 +8,7 @@ import json
 import unittest
 
 
-from nmdc.client.client import get_site_token, get_v1_outputs
+from nmdc.client.client import get_site_token, post_workflow_activities
 
 class testClient(unittest.TestCase):
 
@@ -32,7 +32,9 @@ class testClient(unittest.TestCase):
         print(f'Client token: {access_token}')
 
     def test_metadata_registration(self):
-        print(self.id())                
+        print(self.id())
+        
+        # Had to remove the "version" field below since it is not in the schema.
         data = {
             "read_qc_analysis_activity_set": [
                 {
@@ -47,11 +49,10 @@ class testClient(unittest.TestCase):
                   "output_read_count": 8312566, 
                   "output_read_bases": 1244017053, 
                   "git_url": "https://github.com/microbiomedata/mg_annotation/releases/tag/0.1", 
-                  "version": "b1.0.6", 
                   "ended_at_time": "2022-12-05T14:55:44+00:00", 
                   "has_output": [
-                    "nmdc:b4023bf29269c9820e8f0682b82a8413", 
-                    "nmdc:bd5d6090ddc03b181ffdae383f48b2c3"
+                    "nmdc:b4023bf29269c9820e8f0682b82a8414", 
+                    "nmdc:bd5d6090ddc03b181ffdae383f48b2c4"
                   ], 
               "started_at_time": "2022-10-26T22:59:32+00:00", 
               "was_informed_by": "gold:Gp0000000", 
@@ -67,8 +68,8 @@ class testClient(unittest.TestCase):
                   "url": "https://data.microbiomedata.org/data/nmdc:mgrqc0xxxx.1/qa/nmdc_mgrqc0xxxx.1_filtered.fastq.gz", 
                   "data_object_type": "Filtered Sequencing Reads", 
                   "type": "nmdc:DataObject", 
-                  "id": "nmdc:b4023bf29269c9820e8f0682b82a8413", 
-                  "md5_checksum": "b4023bf29269c9820e8f0682b82a8413", 
+                  "id": "nmdc:b4023bf29269c9820e8f0682b82a8414", 
+                  "md5_checksum": "b4023bf29269c9820e8f0682b82a8414", 
                   "description": "Reads QC for nmdc:mgrqc0xxxx.1"
                 }, 
                 {
@@ -78,7 +79,7 @@ class testClient(unittest.TestCase):
                   "data_object_type": "QC Statistics", 
                   "type": "nmdc:DataObject", 
                   "id": "nmdc:bd5d6090ddc03b181ffdae383f48b2c3", 
-                  "md5_checksum": "bd5d6090ddc03b181ffdae383f48b2c3", 
+                  "md5_checksum": "bd5d6090ddc03b181ffdae383f48b2c4", 
                   "description": "Reads QC summary for nmdc:mgrqc0xxxx.1"
                 }]}
 
@@ -86,7 +87,7 @@ class testClient(unittest.TestCase):
         client_password=os.environ['nmdc_client_credential']
 
         access_token = get_site_token(client_name, client_password)        
-        print(json.dumps(get_v1_outputs(access_token, data).json()))
+        print(json.dumps(post_workflow_activities(access_token, data).json()))
         
 if __name__ == '__main__':
     unittest.main()

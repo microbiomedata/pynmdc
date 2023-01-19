@@ -30,14 +30,14 @@ def get_user(token):
     response = requests.get(users_me_url, headers=headers)
     return response
 
-def get_v1_outputs(token, data):
-    """ Get the v1 outputs.
+def post_workflow_activities(token, data):
+    """ Ingest workflow activities.
 
     This requires authentication as a client not a user.
 
     It needs a name change, e.g. v1_workflow_output_ingest
     """
-    api_url = "https://api-dev.microbiomedata.org/v1/outputs"
+    api_url = "https://api-dev.microbiomedata.org/v1/workflows/activities"
     headers = {"Accept": "application/json",
                "Authorization" : f"Bearer {token}",
                "Connection": "keep-alive"}
@@ -57,6 +57,14 @@ def get_workflows(token):
 
 def get_objects_by_id(token, obj_id):
     api_url = f"https://api-dev.microbiomedata.org/objects/{obj_id}"
+    headers = {"Accept": "application/json",
+               "Authorization" : f"Bearer {token}",
+               "Connection": "keep-alive"}
+    response = requests.get(api_url, headers=headers)
+    return response
+
+def get_jobs(token):
+    api_url = "https://api-dev.microbiomedata.org/jobs"
     headers = {"Accept": "application/json",
                "Authorization" : f"Bearer {token}",
                "Connection": "keep-alive"}
