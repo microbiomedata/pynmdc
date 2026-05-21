@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This project is deprecated. See https://github.com/microbiomedata/nmdc_api_utilities for its replacement.
+
 # About pynmdc
 
 PyNMDC is a Python package to work with NMDC data.
