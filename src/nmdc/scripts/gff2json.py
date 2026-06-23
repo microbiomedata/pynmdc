@@ -4,6 +4,8 @@ Methods to convert NMDC GFF3 to JSON
 import os
 import json
 import re
+import io
+from jsonasobj2 import JsonObj, as_dict, as_json
 
 import obonet
 from BCBio import GFF
@@ -16,14 +18,17 @@ class NMDCGenomeFeature(schema.GenomeFeature):
     """
     def __init__(self, ai, seqid, start, end, **kargs):
         super().__init__(seqid, start, end, **kargs)
-        assert(isinstance(kargs, dict))
+        assert(isinstance(kargs, (dict, JsonObj))) 
         genome_feature = {'seqid': seqid,
                           'start': start,
                           'end': end}
         for k in kargs:
             genome_feature.update({k: kargs[k]})
-        self.properties = {'genome_feature_set': genome_feature,
-                           'functional_annotation_set': {}}
+        self.properties = as_dict({'genome_feature_set': genome_feature,
+                           'functional_annotation_set': {}})
+        #set functional annotation set as dict object
+        self.properties['functional_annotation_set'] = as_dict(self.properties['functional_annotation_set'])
+        #current fix              
         self._ACCEPTABLE_KEYS = ['cog',
                                  'product',
                                  'smart',
@@ -40,7 +45,7 @@ class NMDCGenomeFeature(schema.GenomeFeature):
         return repr
 
     def __dict__(self):
-        return self.properties
+        return as_dict(self.properties)
 
     def get_json(self, indent=2):
         """
