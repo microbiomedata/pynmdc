@@ -105,7 +105,7 @@ class NMDCGenomeFeature(schema.GenomeFeature):
                 for t in v:
                     term_curie = NMDCGenomeFeature.prepare_curie(k, t)
                     functional_annotation = {
-                        'subject': f"nmdc:{feature_id}",
+                        'subject': f"{feature_id}",
                         'has_function': term_curie,
                         'was_generated_by': self.ai,
                         #'type': "NMDC:FunctionalAnnotation"
@@ -155,7 +155,7 @@ class NMDCGFFLoader:
                     feature_strand = '-'
                 elif feature_strand is None:  # None for '' strand
                     feature_strand = ''
-                seqid = f'nmdc:{rec.id}'
+                seqid = f'{rec.id}'
                 if feature_type_so is None:  # avoid "null" type info.
                     nmdc_gf = NMDCGenomeFeature(
                         ai=ai,
